@@ -23,7 +23,10 @@ struct ALSCAMERA_API FAlsTraceDistanceSmoothingSettings
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ALS", Meta = (ClampMin = 0))
-	float InterpolationSpeed{3.0f};
+	float InInterpolationSpeed{6.0f};
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ALS", Meta = (ClampMin = 0))
+	float OutInterpolationSpeed{3.0f};
 };
 
 USTRUCT(BlueprintType)

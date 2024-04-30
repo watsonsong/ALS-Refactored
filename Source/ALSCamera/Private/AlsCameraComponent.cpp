@@ -524,10 +524,11 @@ FVector UAlsCameraComponent::CalculateCameraTrace(const FVector& CameraTargetLoc
 
 	const auto TargetTraceDistanceRatio{UE_REAL_TO_FLOAT((TraceResult - TraceStart).Size() / TraceDistance)};
 
-	NewTraceDistanceRatio = TargetTraceDistanceRatio <= TraceDistanceRatio
-		                        ? TargetTraceDistanceRatio
-		                        : UAlsMath::ExponentialDecay(TraceDistanceRatio, TargetTraceDistanceRatio, DeltaTime,
-		                                                     Settings->ThirdPerson.TraceDistanceSmoothing.InterpolationSpeed);
+	float InterpolationSpeed = TargetTraceDistanceRatio <= TraceDistanceRatio ?
+		Settings->ThirdPerson.TraceDistanceSmoothing.InInterpolationSpeed :
+		Settings->ThirdPerson.TraceDistanceSmoothing.OutInterpolationSpeed;
+	NewTraceDistanceRatio = UAlsMath::ExponentialDecay(TraceDistanceRatio, TargetTraceDistanceRatio, DeltaTime,
+		InterpolationSpeed);
 
 	return TraceStart + TraceVector * TraceDistanceRatio;
 }
